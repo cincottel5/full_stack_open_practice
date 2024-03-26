@@ -22,7 +22,21 @@ let notes = [
   }
 ]
 
+const requestLogger = (request, response, next) => {
+  console.log('Method:', request.method)
+  console.log('Path:', request.path)
+  console.log('Body:', request.body)
+  console.log('---')
+  next()
+}
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({eror: 'unknown endpoint'})
+}
+
 app.use(express.json())
+app.use(requestLogger)
+
 
 // const app = http.createServer((request, response) => {
 //   response.writeHead(200, {'Content-Type': 'application/json'})
@@ -94,6 +108,8 @@ app.delete('/api/notes/:id', (request, response) => {
 
   response.status(204).end()
 })
+
+app.use(unknownEndpoint)
 
 const PORT = 3001
 //app.listen(PORT)

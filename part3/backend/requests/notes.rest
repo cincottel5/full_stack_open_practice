@@ -13,3 +13,9 @@ Content-Type: application/json
 ### POST with error
 POST http://localhost:3001/api/notes
 Content-Type: application/json
+
+###
+GET http://localhost:3001/api/fail
+
+### 
+DELETE http://localhost:3001/api/notes/2

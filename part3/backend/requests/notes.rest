@@ -1,6 +1,15 @@
 
 GET http://localhost:3001/api/notes
 
+### GET one that exists
+GET http://localhost:3001/api/notes/6622e30b3b878b70f967e7a7
+
+### GET one that not exits
+GET http://localhost:3001/api/notes/6622e30b3b878b70f967e7a5
+ju
+### GET one with incorrect id
+GET http://localhost:3001/api/notes/someInvalidId
+
 ###
 POST http://localhost:3001/api/notes
 Content-Type: application/json
@@ -9,6 +18,16 @@ Content-Type: application/json
   "content": "VS code rest client is a pretty handy tool",
   "important": true
 }
+
+### 
+PUT http://localhost:3001/api/notes/6622e30b3b878b70f967e7a7
+Content-Type: application/json
+
+{
+  "content": "VS code rest client is a pretty handy tool",
+  "important": false
+}
+
 
 ### POST with error
 POST http://localhost:3001/api/notes

@@ -15,7 +15,7 @@ POST http://localhost:3001/api/notes
 Content-Type: application/json
 
 {
-  "content": "VS code rest client is a pretty handy tool",
+  "content": "VS code rest client is a pretty handy tool 2",
   "important": true
 }
 
@@ -37,4 +37,4 @@ Content-Type: application/json
 GET http://localhost:3001/api/fail
 
 ### 
-DELETE http://localhost:3001/api/notes/2
+DELETE http://localhost:3001/api/notes/662acba02de33144507b951e

@@ -13,9 +13,10 @@ GET http://localhost:3001/api/notes/someInvalidId
 ###
 POST http://localhost:3001/api/notes
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY2ZDFmYjI2YmExM2I3NDljZjJhZWQyOCIsImlhdCI6MTcyNTAzNzM3NCwiZXhwIjoxNzI1MDQwOTc0fQ.4FxVQVCilHUbGsCA16XbjQDGJ8SDUoN_zH5TgPVwpi0
 
 {
-  "content": "VS code rest client is a pretty handy tool 2",
+  "content": "User id of the note creator is at the start sent along the request",
   "important": true
 }
 

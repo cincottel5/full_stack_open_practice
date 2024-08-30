@@ -1,16 +1,28 @@
-const { test, after, beforeEach, describe } = require('node:test')
+const { test, after, beforeEach, describe, before } = require('node:test')
 const assert = require('node:assert')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const helper = require('./test_helper')
+const config = require('../utils/config')
 const app = require('../app')
 const Note = require('../models/note')
-
+const User = require('../models/user')
+const jwtToken = require('../utils/jwt_token')
 const api = supertest(app)
+
+// node --test-only ./tests/note_api.test.js
 
 describe('when there is initially some notes saved', () => {
   
-  beforeEach( async () => {
+  before( async () => {
+    if (mongoose.connection.readyState !== 1) {
+      await mongoose.disconnect()
+      await mongoose.connect(config.MONGODB_URI)
+      console.log('db was not connected, now it is.')
+    }
+  })
+  
+  beforeEach( async () => { 
     await Note.deleteMany({})
     await Note.insertMany(helper.initialNotes)
   })
@@ -69,13 +81,19 @@ describe('when there is initially some notes saved', () => {
   describe('addition of a new note', () => {
     
     test('succeeds with valid data', async () => {
+      await User.deleteMany()
+      await new User(helper.initialUser).save()
+      const user = await helper.initialUserInDb()
+      const token = jwtToken.newToken(user)
+
       const newNote = {
         content: 'async/await simplifies making async calls',
         important: true
       }
-    
+
       await api
         .post('/api/notes')
+        .set('Authorization', `Bearer ${token}`)
         .send(newNote)
         .expect(201)
         .expect('Content-Type', /application\/json/)
@@ -88,15 +106,33 @@ describe('when there is initially some notes saved', () => {
     })
 
     test('fails with status code 400 if data invalid', async () => {
+      await User.deleteMany()
+      await new User(helper.initialUser).save()
+      const user = await helper.initialUserInDb()
+      const token = jwtToken.newToken(user)
+      
       const newNote = { important: true }
 
       await api
         .post('/api/notes')
+        .set('Authorization', `Bearer ${token}`)
         .send(newNote)
         .expect(400)
     
       const notesAtEnd = await helper.notesInBd()
       assert.strictEqual(notesAtEnd.length, helper.initialNotes.length)
+    })
+
+    test('fails when token is not supplied', async () => {
+      const newNote = { important: true }
+
+      await api
+        .post('/api/notes')
+        .send(newNote)
+        .expect(401)
+
+        const notesAtEnd = await helper.notesInBd()
+        assert.strictEqual(notesAtEnd.length, helper.initialNotes.length)
     })
   })
 
@@ -120,5 +156,6 @@ describe('when there is initially some notes saved', () => {
 })
 
 after(async () => {
-  await mongoose.connection.close()
+  await mongoose.disconnect()
 })
+

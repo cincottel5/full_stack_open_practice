@@ -44,9 +44,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    
     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
-
     if(loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
@@ -65,9 +63,7 @@ const App = () => {
       )
       noteService.setToken(user.token)
       setUser(user)
-      
     } catch (exception) {
-
       setErrorMessage('Wrong credentials')
       setTimeout(() => { setErrorMessage(null) }, 5000)
     }
@@ -85,7 +81,7 @@ const App = () => {
         setErrorMessage(`Note ${note.content} was already removed from server`)
         setTimeout(() => {
           setErrorMessage(null)
-        }, 5000);
+        }, 5000)
         setNotes(notes.filter(n => n.id !== id))
       })
   }
@@ -118,7 +114,6 @@ const App = () => {
   const loginForm = () => {
     //const hideWhenVisible = { display: loginVisible ? 'none': ''}
     //const showWhenVisible = { display: loginVisible ? '' : 'none'}
-    
     return (
       <Toggable buttonLabel="login">
         <LoginForm
@@ -133,13 +128,10 @@ const App = () => {
     )
 
     // return (
-
     //   <div>
-        
     //     <div style={hideWhenVisible}>
     //       <button onClick={() => setLoginVisible(true)}>log in</button>
     //     </div>
-
     //     <div style={showWhenVisible}>
     //       <LoginForm
     //         username={username}
@@ -189,17 +181,15 @@ const App = () => {
     </Toggable>
   )
 
-
   return (
     <div>
       <h1>Notes</h1>
       <Notification message={errorMessage} />
-
       {/* {user === null && loginForm()}
       {user !== null && noteForm()} */}
       { user === null
         ? loginForm()
-        : 
+        :
         <div>
           <p>{user.name} logged-in</p>
           {noteForm()}
@@ -220,7 +210,6 @@ const App = () => {
           />
         )}
       </ul>
-
       <Footer />
     </div>
   )

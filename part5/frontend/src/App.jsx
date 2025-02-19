@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Note from './components/Note'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
-import Toggable from './components/Toggable'
+import Togglable from './components/Togglable'
 import NoteForm from './components/NoteForm'
 import axios from 'axios'
 import noteService from './services/notes'
@@ -115,7 +115,7 @@ const App = () => {
     //const hideWhenVisible = { display: loginVisible ? 'none': ''}
     //const showWhenVisible = { display: loginVisible ? '' : 'none'}
     return (
-      <Toggable buttonLabel="login">
+      <Togglable buttonLabel="login">
         <LoginForm
           // username={username}
           // password={password}
@@ -124,7 +124,7 @@ const App = () => {
           // handleSubmit={handleLogin}
           handleLogin={handleLogin}
         />
-      </Toggable>
+      </Togglable>
     )
 
     // return (
@@ -171,14 +171,14 @@ const App = () => {
   }
 
   const noteForm = () => (
-    <Toggable buttonLabel="new note" ref={noteFormRef}>
-      <NoteForm 
+    <Togglable buttonLabel="new note" ref={noteFormRef}>
+      <NoteForm
         // onSubmit={addNote}
         // value={newNote}
         // handleChange={handleNoteChange}
         createNote={addNote}
       />
-    </Toggable>
+    </Togglable>
   )
 
   return (

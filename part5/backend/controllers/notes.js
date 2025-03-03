@@ -42,7 +42,7 @@ notesRouter.delete('/:id', async (request, response) => {
   response.status(204).end()
 })
 
-notesRouter.put('/api/notes/:id', (request, response, next) => {
+notesRouter.put('/:id', (request, response, next) => {
   const body = request.body
   
   const note = {

@@ -25,12 +25,15 @@ const LoginForm= ({
         <div>
           username
           <input
+            data-testid='username'
             value={username}
             onChange={(event) => setUsername(event.target.value)} />
         </div>
         <div>
           password
-          <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
+          <input
+            data-testid='password'
+            type="password" value={password} onChange={(event) => setPassword(event.target.value)} />
         </div>
         <div>
           <button type="submit">login</button>

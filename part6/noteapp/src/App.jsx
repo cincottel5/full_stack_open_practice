@@ -1,10 +1,21 @@
 import { useSelector, useDispatch } from 'react-redux'
-
+import { useEffect } from 'react'
+import noteService from './services/notes'
+import { setState } from './reducers/noteReducer'
 import NewNote from './components/NewNote'
 import Notes from './components/Notes'
 import VisibilityFilter from './components/VisibilityFilter'
 
 function App() {
+  const dispatch = useDispatch()
+
+  const hook = () => {
+    noteService.getAll()
+      .then(notes=> dispatch(setState(notes)))
+  }
+
+  useEffect(hook, [])
+
   // const filterSelected = value => {
   //   console.log(value)
   // }

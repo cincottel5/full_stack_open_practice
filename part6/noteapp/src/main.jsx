@@ -1,13 +1,14 @@
 
 import { createRoot } from 'react-dom/client'
 // import { createStore, combineReducers } from 'redux'
-import { configureStore } from '@reduxjs/toolkit'
+//import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 
 import App from './App'
-import noteReducer, { appendNote, setState } from './reducers/noteReducer'
-import filterReducer from './reducers/filterReducer'
-import noteService from './services/notes'
+//import noteReducer, { appendNote, setState } from './reducers/noteReducer'
+//import filterReducer from './reducers/filterReducer'
+//import noteService from './services/notes'
+import setStore from './store'
 
 // const reducers = combineReducers({
 //   notes: noteReducer,
@@ -16,12 +17,12 @@ import noteService from './services/notes'
 
 //const store = createStore(noteReducer)
 //const store = createStore(reducers)
-const store = configureStore({
-  reducer: {
-    notes: noteReducer,
-    filter: filterReducer
-  }
-})
+// const store = configureStore({
+//   reducer: {
+//     notes: noteReducer,
+//     filter: filterReducer
+//   }
+// })
 
 // noteService.getAll().then(notes => {
 //   // notes.forEach(note => {
@@ -37,7 +38,7 @@ const store = configureStore({
 //store.dispatch(createNote('combineReducers forms one reducer from many simple reducers'))
 
 createRoot(document.getElementById('root')).render(
-    <Provider store={store}>
+    <Provider store={setStore()}>
       <App />
     </Provider>
 )

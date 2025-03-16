@@ -18,6 +18,4 @@ const updateNote = async (note) => {
   return response.data
 }
 
-
-
 export default { getAll, createNew, updateNote}

@@ -23,7 +23,7 @@
     {
       "id": "1edf",
       "content": "note with query react 2",
-      "important": false
+      "important": true
     },
     {
       "id": "614c",
@@ -38,6 +38,11 @@
     {
       "id": "26e8",
       "content": "manual update 2",
+      "important": false
+    },
+    {
+      "id": "ecf7",
+      "content": "asdfasf",
       "important": false
     }
   ]

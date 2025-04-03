@@ -1,6 +1,20 @@
 import ReactDOM from 'react-dom/client'
-import styled from 'styled-components'
 import { useState } from 'react'
+import {
+  Container,
+  TableContainer,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  Paper,
+  TextField,
+  Button,
+  Alert,
+  AppBar,
+  Toolbar,
+  IconButton
+} from '@mui/material'
 
 import {
   BrowserRouter as Router,
@@ -14,35 +28,6 @@ import {
 } from "react-router-dom"
 
 
-const Button = styled.button`
-  background: Bisque;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid Chocolate;
-  border-radius: 3px;
-`
-
-const Input = styled.input`
-  margin: 0.25em;
-`
-
-const Page = styled.div`
-  padding: 1em;
-  background: papayawhip;
-`
-
-const Navigation = styled.div`
-  background: BurlyWood;
-  padding: 1em;
-`
-
-const Footer = styled.div`
-  background: Chocolate;
-  padding: 1em;
-  margin-top: 1em;
-`
-
 const Home = () => (
   <div>
     <h2>TKTL notes app</h2>
@@ -50,8 +35,8 @@ const Home = () => (
   </div>
 )
 
+//const Note = ({ notes }) => {
 const Note = ({ note }) => {
-  
   return (
     <div>
       <h2>{note.content}</h2>
@@ -64,14 +49,23 @@ const Note = ({ note }) => {
 const Notes = ({ notes }) => (
   <div>
     <h2>Notes</h2>
-    
-    <ul>
-      {notes.map(note =>
-        <li key={note.id}>
-          <Link to={`/notes/${note.id}`}>{note.content}</Link>
-        </li>
-      )}
-    </ul>
+
+    <TableContainer component={Paper}>
+      <Table>
+        <TableBody>
+          {notes.map(note =>
+            <TableRow key={note.id}>
+              <TableCell>
+                <Link to={`/notes/${note.id}`}>{note.content}</Link>
+              </TableCell>
+              <TableCell>
+                {note.user}
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
   </div>
 )
 
@@ -98,17 +92,18 @@ const Login = (props) => {
   return (
     <div>
       <h2>login</h2>
-    
       <form onSubmit={onSubmit}>
         <div>
-          username: <Input/>
+          <TextField label="username" />
         </div>
         <div>
-          password: <Input type='password'/>
+          <TextField label="password" type="password" />
         </div>
-        <Button type='submit' primary=''>
-          login
-        </Button>
+        <div>
+          <Button variant='contained' color='primary' type="submit">
+            login
+          </Button>
+        </div>
       </form>
     </div>
   )
@@ -152,43 +147,70 @@ const App = () => {
   }
 
   const match = useMatch('/notes/:id')
-  const note = match 
+  const note = match
     ? notes.find(note => note.id === Number(match.params.id))
     : null
 
   return (
-    <Page>
+    <Container>
       {(message &&
-        <div>
+        <Alert severity='success'>
           {message}
-        </div>
+        </Alert>
       )}
       {/* <Router> */}
-      
-      <Navigation>
-        <Link style={padding} to="/">home</Link>
-        <Link style={padding} to="/notes">notes</Link>
-        <Link style={padding} to="/users">users</Link>
-        {user
-          ? <em>{user} logged in</em>
-          : <Link style={padding} to="/login">login</Link>
-        }
-      </Navigation>
+
+      <AppBar position='static'>
+        <Toolbar>
+          <Button color='inherit' component={Link} to='/'>home</Button>
+          <Button color='inherit' component={Link} to='/notes'>notes</Button>
+          <Button color='inherit' component={Link} to='/users'>users</Button>
+          {user
+              ? <em>{user} logged in</em>
+              : <Button color='inherit' component={Link} to='/login'>login</Button>
+          }
+
+          {/* <IconButton edge="start" color="inherit" aria-label="menu"></IconButton>
+          <Button color='inherit' compo>
+            <Link style={padding} to="/">home</Link>
+          </Button>
+          <Button color='inherit'>
+            <Link style={padding} to="/notes">notes</Link>
+          </Button>
+          <Button color='inherit'>
+            <Link style={padding} to="/users">users</Link>
+          </Button>
+          <Button color='inherit'>
+            {user
+              ? <em>{user} logged in</em>
+              : <Link style={padding} to="/login">login</Link>
+            }
+          </Button> */}
+        </Toolbar>
+      </AppBar>
+
+
+      <div>
+
+
+
+
+      </div>
 
       <Routes>
         {/* <Route path="/notes/:id" element={<Note notes={notes} />} /> */}
-        <Route path="/notes/:id" element={<Note note={ note } />} />
-        <Route path="/notes" element={<Notes notes={ notes } />} />
+        <Route path="/notes/:id" element={<Note note={note} />} />
+        <Route path="/notes" element={<Notes notes={notes} />} />
         <Route path="/users" element={user ? <Users /> : <Navigate replace to="/login" />} />
         <Route path="/login" element={<Login onLogin={login} />} />
         <Route path="/" element={<Home />} />
       </Routes>
       {/* </Router> */}
-      <Footer>
+      <footer>
         <br />
         <em>Note app, Department of Computer Science 2023</em>
-      </Footer>
-    </Page>
+      </footer>
+    </Container>
   )
 }
 

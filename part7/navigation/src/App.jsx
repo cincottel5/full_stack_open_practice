@@ -29,23 +29,26 @@ const App = () => {
   }
 
   return (
-    <Router>
-      <div>
-        <Link style={padding} to="/">home</Link>
-        <Link style={padding} to="/notes">notes</Link>
-        <Link style={padding} to="/users">users</Link>
-      </div>
+    <div className='container'>
+      <Router>
+        <div>
+          <Link style={padding} to="/">home</Link>
+          <Link style={padding} to="/notes">notes</Link>
+          <Link style={padding} to="/users">users</Link>
+        </div>
 
-      <Routes>
-        <Route path="/notes" element={<Notes/>} />
-        <Route path="/users" element={<Users/>} />
-        <Route path="/" element={<Home/>} />
-      </Routes>
+        <Routes>
+          <Route path="/notes" element={<Notes />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/" element={<Home />} />
+        </Routes>
 
-      <div>
-        <i>Note app, Department of Computer Science 2024</i>
-      </div>
-    </Router>
+        <div>
+          <i>Note app, Department of Computer Science 2024</i>
+        </div>
+      </Router>
+    </div>
+
   )
 }
 

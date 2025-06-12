@@ -98,7 +98,7 @@ const resolvers = {
     me: (root, args, context) => context.currentUser
   },
   Mutation: {
-    addPerson: async (root, args) => {
+    addPerson: async (root, args, context) => {
       const person = new Person({...args})
       const currentUser = context.currentUser
 
@@ -244,8 +244,6 @@ startStandaloneServer(server,  {
       const currentUser = await User
         .findById(decodedToken.id)
         .populate('friends')
-
-      console.log(currentUser)
 
       return { currentUser }
     }

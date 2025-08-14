@@ -12,13 +12,17 @@ const resolvers = {
     //allPersons: () => persons,
     allPersons: async (root, args) => {
       if (!args.phone)
-        return Person.find({})
+        return Person
+          .find({})
+          .populate('friendOf')
 
-      return Person.find({ phone: { $exists: args.phone === 'YES'}})
+      return Person
+        .find({ phone: { $exists: args.phone === 'YES'}})
+        .populate('friendOf')
       //if (!args.phone) return persons
       //const byPhone = person => args.phone === 'YES' ? person.phone : !person.phone
     },
-    findPerson: async (root, args) => Person.findOne({ name: args.name }),
+    findPerson: async (root, args) => Person.findOne({ name: args.name }).populate('friendOf'),
     me: (root, args, context) => context.currentUser
   },
 
@@ -127,7 +131,7 @@ const resolvers = {
         id: user._id
       }
 
-      return { value: jwt.sign(userForToken, process.env.JWT_SECRET)}
+      return { value: jwt.sign(userForToken, process.env.SECRET)}
     },
 
     addAsFriend: async (root, args, { currentUser}) => {
@@ -157,7 +161,18 @@ const resolvers = {
     address: (root) => ({
       street: root.street,
       city: root.city
-    })
+    }),
+    // friendOf: async (root) => {
+    //   const friends = await User.find({
+    //     friends: {
+    //       $in: [root._id]
+    //     }
+    //   })
+
+    //   console.log('Person.find')
+
+    //   return friends
+    // }
   }
 }
 

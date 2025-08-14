@@ -6,7 +6,21 @@ import PhoneForm from './components/PhoneForm'
 import { ALL_PERSONS, PERSON_ADDED } from './utils/queries'
 import LoginForm from './components/LoginForm'
 
-function App() {
+export const updateCache = (cache, query, addedPerson) => {
+  const uniqByName = a => {
+    let seen = new Set()
+
+    return a.filter(item => {
+      let k = item.name
+      return seen.has(k) ? false : seen.add(k)
+    })
+  }
+
+  cache.updateQuery(query, ({ allPersons}) => 
+    ({ allPersons: uniqByName(allPersons.concat(addedPerson)) })) 
+}
+
+const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [token, setToken] = useState(null)
   const result = useQuery(ALL_PERSONS)
@@ -26,10 +40,10 @@ function App() {
         
         notify(`${addedPerson.name} added`)
 
-        console.log(client.cache)
-        client.cache.updateQuery({ query: ALL_PERSONS }, ({ allPersons }) => {
-          return allPersons.concat(addedPerson)
-        })
+        // client.cache.updateQuery({ query: ALL_PERSONS }, ({ allPersons }) => {
+        //   return allPersons.concat(addedPerson)
+        // })
+        updateCache(client.cache, { query: ALL_PERSONS}, addedPerson)
       } catch (err){
         console.log(err)
       }

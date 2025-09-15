@@ -6,7 +6,7 @@
 
 //multiplicator('how about a string?', 4, 'Multiplied numbers 2 and 4, the result is:')
 
-type Operation = 'multiply' | 'add' | 'divide';
+export type Operation = 'multiply' | 'add' | 'divide';
 //type Result = number | string;
 
 //const calculator = (a: number, b: number, op: Operation): number | string => {
@@ -35,7 +35,7 @@ export const calculator = (a: number, b: number, op: Operation): number => {
     default: 
       throw new Error('Operation is not multiply, add or divide!');
   }
-}
+};
 
 try {
   if (require.main === module) {

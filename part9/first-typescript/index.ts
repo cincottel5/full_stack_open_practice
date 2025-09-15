@@ -1,51 +1,21 @@
-// const multiplicator = (a: number, b: number, printText: string) => {
-//   console.log(printText, a*b);
-// }
+//const express = require('express')
+import express from 'express';
+import { calculator } from './calculator';
+const app = express();
 
-// multiplicator(2, 4, 'Multiplied numbers 2 and 4, the result is:');
+app.use(express.json());
 
-//multiplicator('how about a string?', 4, 'Multiplied numbers 2 and 4, the result is:')
+app.get('/ping', (_req, res) => res.send('pong'));
 
-type Operation = 'multiply' | 'add' | 'divide';
-type Result = number | string;
+app.post('/calculate', (req, res) => {
+  const { value1, value2, op } = req.body;
 
-//const calculator = (a: number, b: number, op: Operation): number | string => {
-// const calculator = (a: number, b: number, op: Operation): Result => {
-//   if (op === 'multiply') {
-//     return a * b;
-//   }
-//   else if (op === 'add') {
-//     return a + b;
-//   }
-//   else if (op === 'divide') {
-//     if (b === 0 ) return 'can\'t divide by 0!';
-//     return a / b; 
-//   }
-// }
+  const result = calculator(value1, value2, op);
+  res.send({ result });
+})
 
-const calculator = (a: number, b: number, op: Operation): number => {
-  switch(op) {
-    case 'multiply':
-      return a * b;
-    case 'add': 
-      return a + b;
-    case 'divide': 
-      if (b === 0) throw new Error('Can\'t divide by 0!');
-      return a / b;
-    default: 
-      throw new Error('Operation is not multiply, add or divide!');
-  }
-}
+const PORT = 3003;
 
-try {
-  console.log(calculator(1,5, 'divide'));
-} catch (error: unknown) {
-  let errorMessage = 'Something went wrong: ';
-
-  if (error instanceof Error) {
-    errorMessage += error.message;
-  }
-  console.log(errorMessage)
-}
-
-calculator(3,4, 'add')
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+})

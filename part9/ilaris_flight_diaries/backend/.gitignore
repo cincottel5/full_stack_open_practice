@@ -1,0 +1,32 @@
+# Node modules
+node_modules/
+
+# Build artifacts
+dist/
+build/
+out/
+es/
+
+# Compiled JavaScript files and source maps
+*.js
+*.js.map
+*.d.ts
+
+# TypeScript cache
+.tsbuildinfo
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Editor/OS specific
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

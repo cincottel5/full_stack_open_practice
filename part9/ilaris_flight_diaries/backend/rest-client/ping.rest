@@ -1,1 +1,21 @@
 GET http://localhost:3000/ping
+
+### 
+
+GET http://localhost:3000/api/diaries
+
+### 
+
+GET http://localhost:3000/api/diaries/5
+
+### 
+
+POST http://localhost:3000/api/diaries
+Content-Type: application/json
+
+{
+  "date": "2025-20-22",
+  "visibility": "good",
+  "weather": "rainy",
+  "comment": "what a beautiful day"
+}

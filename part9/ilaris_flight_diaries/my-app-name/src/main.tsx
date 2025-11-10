@@ -18,7 +18,7 @@ const Welcome = ({name}: { name: string}) => (
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {/* <App /> */}
-    <Welcome name="Sarah"/>
+    <App />
+    {/* <Welcome name="Sarah"/> */}
   </StrictMode>,
 )
